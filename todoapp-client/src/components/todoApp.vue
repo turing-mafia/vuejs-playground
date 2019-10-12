@@ -5,13 +5,19 @@
         <small>List</small>
       </h1>
       <form role="form">
-        <input type="text" class="form-control" placeholder="해야 할 일">
+        <input type="text"
+               class="form-control"
+               placeholder="해야 할 일"
+               v-model="title"
+               v-on:keyup.enter="addTodo(title)">
       </form>
-      <button type="button" class="btn btn btn-primary">Add</button>
+      <button type="button"
+              v-on:click="addTodo(title)"
+              class="btn btn btn-primary">Add</button>
     </div>
     <div class="todo-list">
       <!-- todoList Component -->
-      <todoList v-bind:todos="todos"></todoList>
+      <todoList v-bind:todos="todos" v-on:del-todo="delTodo"></todoList>
     </div>
   </div>
 </template>
@@ -29,6 +35,17 @@
           { title: 'javascript' },
           { title: '영어' }
         ]
+      }
+    },
+    methods: {
+      addTodo(title) {
+        if (title) {
+          this.todos.push({ title: title });
+          this.title = '';
+        }
+      },
+      delTodo(index) {
+        this.todos.splice(index, 1);
       }
     },
     components: {
