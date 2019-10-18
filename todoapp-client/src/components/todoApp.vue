@@ -29,23 +29,27 @@
     data() {
       return {
         title: '',
-        todos: [
-          { title: '운동하기' },
-          { title: 'JAVA' },
-          { title: 'javascript' },
-          { title: '영어' }
-        ]
+        todos: []
       }
     },
+    mounted() {
+      this.getTodos();
+    },
     methods: {
+      getTodos() {
+        this.$http.get('http://localhost:3000/todo')
+          .then(res => this.todos = res.data);
+      },
       addTodo(title) {
         if (title) {
-          this.todos.push({ title: title });
+          this.$http.post('http://localhost:3000/todo', { title })
+            .then(() => this.getTodos());
           this.title = '';
         }
       },
       delTodo(index) {
-        this.todos.splice(index, 1);
+        this.$http.delete('http://localhost:3000/todo/' + index)
+          .then(() => this.getTodos());
       }
     },
     components: {

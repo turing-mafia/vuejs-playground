@@ -17,7 +17,7 @@ router.get('/todo', (req, res) => {
 
 router.post('/todo', (req, res) => {
   const todo = new Todo();
-  todo.tilte = req.body.title;
+  todo.title = req.body.title;
   
   todo.save(function(err) {
     if (err) {
@@ -29,8 +29,8 @@ router.post('/todo', (req, res) => {
   });
 });
 
-router.delete("/todo/:todo_id", function(req, res) {
-  Todo.remove({ _id: req.params.todo_id }, function(err, output) {
+router.delete("/todo/:_id", function(req, res) {
+  Todo.remove({ _id: req.params._id }, function(err, output) {
     if (err)
       return res.status(500).json({ error: 'database failure' });
     res.status(204).end();
